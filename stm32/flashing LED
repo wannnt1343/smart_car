@@ -1,1 +1,27 @@
 
+#include "stm32f10x.h"
+#include "sys.h"
+
+int main(void)
+  { 
+		Stm32_Clock_Init(9);						//�ⲿʱ��8Mhz 9��Ƶ  8*9= 72mhz��Ƶ72mhz
+		MY_NVIC_PriorityGroupConfig(2);	//=====�ж����ȼ�����		
+		uart_init(115200);	            //=====���ڳ�ʼ��Ϊ115200
+		JTAG_Set(JTAG_SWD_DISABLE);     //=====�ر�JTAG�ӿ�
+		JTAG_Set(SWD_ENABLE);           //=====��SWD�ӿ� �������������SWD�ӿڵ���
+
+		colorful_led_Init();            //=====�ŲʵƳ�ʼ��
+
+		printf("QST����\r\n");
+		/**��Ҫ����**/
+	while(1)
+	{
+		if(USART_RX_STA==1)  //�жϽ��յ��������ݵ��
+			L_runingled();
+		  delay_ms(1000);
+		  R_runingled();
+		  delay_ms(1000);
+	}
+}
+	
+
